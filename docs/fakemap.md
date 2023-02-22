@@ -1,0 +1,4 @@
+ 
+# fakemap module
+
+::: fakemap.fakemap
