@@ -49,7 +49,7 @@ nav:
     - Changelog: changelog.md
     - Report Issues: https://github.com/MattAGUT/fakemap/issues
     - Examples: 
-            examples/intro.ipynb
-            examples/folium.ipynb
+           - examples/intro.ipynb
+           - examples/folium.ipynb
     - API Reference:
           - fakemap module: fakemap.md
