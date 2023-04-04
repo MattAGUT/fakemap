@@ -28,7 +28,7 @@ class Map(ipyleaflet.Map):
     def add_draw_control(self, **kwargs):
         """Adds draw control to the map.
         
-        Args :
+        Args:
             Kwargs: Keyword Arguments to add to the draw control.
         """
         draw_control = ipyleaflet.DrawControl(**kwargs)
