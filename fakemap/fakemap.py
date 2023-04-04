@@ -14,7 +14,7 @@ class Map(ipyleaflet.Map):
         """Adds search control to the map
         
         Args :
-            kwargs: Keyword arguments to pass to the search control.
+             Kwargs: Keyword arguments to pass to the search control.
         """
         if "url" not in kwargs:
             kwargs["url"] = "https://nominatim.openstreetmap.org/search?format=json&q={s}"
