@@ -13,7 +13,6 @@ class Map(ipyleaflet.Map):
     def add_search_control(self, position="topright",**kwargs):
         """Adds search control to the map
         
-        
         Args :
             kwargs: Keyword arguments to pass to the search control.
         """
