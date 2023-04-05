@@ -1,8 +1,9 @@
 # Changelog
 
-## v0.0.2 - Feb 23, 2023
+## v0.0.2 - April 4, 2023
 
-Documentation 
+- Added some functions and notebooks
+
 
 ## v0.0.1 - Feb 21, 2023
 
