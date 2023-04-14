@@ -116,7 +116,14 @@ class Map(ipyleaflet.Map):
         self.add_layer(tile_layer)
     
     def add_basemap(self, basemap, **kwargs):
+        """ Adds a basemap to the map.
 
+        Args:
+            basemap : A basemap path 
+
+        Raises:
+            ValueError: Not a valid basemap
+        """
         import xyzservices.providers as xyz
 
         if basemap.lower() == 'roadmap':

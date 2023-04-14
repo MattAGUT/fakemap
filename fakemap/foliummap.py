@@ -7,7 +7,7 @@ class Map(folium.Map):
         folium: Creates a map in Folium 
     """
     def __init__(self, center=[20,0], zoom=2, **kwargs) -> None:
-        """_summary_
+        """
 
         Args:
             center (list, optional): The Map Center. Defaults to [20,0].
@@ -32,7 +32,7 @@ class Map(folium.Map):
         self.add_child(tile_layer)
 
     def add_basemap(self, basemap, **kwargs):
-        """_summary_
+        """Adds a basemap to the map
 
         Args:
             basemap: The basemap to add
