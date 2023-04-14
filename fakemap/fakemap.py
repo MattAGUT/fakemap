@@ -5,10 +5,23 @@ import ipyleaflet
 
 class Map(ipyleaflet.Map):
 
-    def __init__(self, center, zoom, **kwargs) -> None:
+    def __init__(self, center=[20,0], **kwargs) -> None:
         if "scroll_wheel_zoom" not in kwargs:
             kwargs["scroll_wheel_zoom"] = True
-        super().__init__(center = center, zoom = zoom, **kwargs)
+        
+        super().__init__(center = center, **kwargs)
+
+        if "layers_control" not in kwargs:
+            kwargs["layers_control"] = True
+
+        if kwargs["layers_control"]:
+            self.add_layers_control()
+        
+        if "fullscreen_control" not in kwargs:
+            kwargs["fullscreen_control"] = True
+        
+        if kwargs ["fullscreen_control"]:
+            self.add_fullscreen_control()
 
     def add_search_control(self, position="topright",**kwargs):
         """Adds search control to the map
@@ -68,6 +81,100 @@ class Map(ipyleaflet.Map):
         self.add_control(draw_control)
 
 
+    def add_layers_control(self, position="topright", **kwargs):
+        """Adds a layers control to the map.
+        
+        Args:
+            kwargs: Keyword arguments to pass to the layers control
+        """
+        layers_control = ipyleaflet.LayersControl(position = position, **kwargs)
+        self.add_control(layers_control)
+
+    def add_fullscreen_control(self, position="topleft"):
+        """Adds a fullscreen control to the map.
+        
+        Args:
+            kwargs: Keyward arguments to pass to the layers control.
+        """
+        fullscreen_control = ipyleaflet.FullScreenControl(position=position)
+        self.add_control(fullscreen_control)
+    
+    def add_tile_layer(self, url, name, attribution = "", **kwargs):
+        """Adds a tile layer to the map.
+        
+        Args:
+            url (str): The URL of the tile layer.
+            name (str): The name of the tile layer
+            attribution (str, optional): The attribution of the tile layer. Defaults to **
+            """
+        tile_layer = ipyleaflet.TileLayer(
+            url = url,
+            name = name,
+            attribution = attribution,
+            **kwargs
+        )
+        self.add_layer(tile_layer)
+    
+    def add_basemap(self, basemap, **kwargs):
+
+        import xyzservices.providers as xyz
+
+        if basemap.lower() == 'roadmap':
+            url = 'http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}'
+            self.add_tile_layer(url, name=basemap, **kwargs ) 
+        elif basemap.lower() == 'satellite':
+            url = 'http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}'
+            self.add_tile_layer(url, name=basemap, **kwargs)
+        else:
+            try:
+                basemap = eval(f"xyz.{basemap}")
+                url = basemap.build_url()
+                attribution = basemap.attribution 
+                self.add_tile_layer(url, name =basemap.name, attribution=attribution, **kwargs)
+            except:
+                raise ValueError(f"Basemap '{basemap}' not found")
+            
+
+    def add_geojson(self, data, name="GeoJSON", **kwargs):
+        """Adds a GeoJSON layer to the map.
+        
+        Args:
+            data (dict): The GeoJSON data.
+            """
+        
+        if isinstance(data, str):
+            import json
+            with open(data, "r") as f:
+                data = json.load(f)
+
+        geojson = ipyleaflet.GeoJSON(data=data, name=name,**kwargs)
+        self.add_layer(geojson)
+   
+    def add_shp(self, data, name='Shapefile', **kwargs):
+        """Adds a Shapefile layer to the map.
+        
+        Args:
+            data (str): the path to the Shapefile.
+        """
+        import geopandas as gpd
+        gdf = gpd.read_file(data)
+        geojson = gdf.__geo_interface__
+        self.add_geojson(geojson, name=name, **kwargs)
+
+    def add_vector(self, data, name = 'Vector Data', **kwargs):
+        """Adds Vector Data to the map.
+        
+        Args:
+            data (str): the path to the Vector Data
+            """
+        import geopandas as gdp
+        gdf = gdp.read_file(data)
+        geojson = gdf.__geo_interface__
+        self.add_geojson(geojson, name = name, **kwargs)
+
+
+
+        
 
 
 
