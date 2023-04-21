@@ -179,6 +179,57 @@ class Map(ipyleaflet.Map):
         geojson = gdf.__geo_interface__
         self.add_geojson(geojson, name = name, **kwargs)
 
+    def add_raster(self, url, name='Raster', fit_bounds=True, **kwargs):
+        """Adds a raster layer to the map.
+        Args:
+            url (str): The URL of the raster layer.
+            name (str, optional): The name of the raster layer. Defaults to 'Raster'.
+            fit_bounds (bool, optional): Whether to fit the map bounds to the raster layer. Defaults to True.
+        """
+        import httpx
+
+        titiler_endpoint = "https://titiler.xyz"
+
+        r = httpx.get(
+            f"{titiler_endpoint}/cog/info",
+            params = {
+                "url": url,
+            }
+        ).json()
+
+        bounds = r["bounds"]
+
+        r = httpx.get(
+            f"{titiler_endpoint}/cog/tilejson.json",
+            params = {
+                "url": url,
+            }
+        ).json()
+
+        tile = r["tiles"][0]
+
+        self.add_tile_layer(url=tile, name=name, **kwargs)
+
+        if fit_bounds:
+            bbox = [[bounds[1], bounds[0]], [bounds[3], bounds[2]]]
+            self.fit_bounds(bbox)
+
+    def add_image(self, url, width, height, position, **kwargs):
+        """Adds an image to the map.
+        
+        Args:
+            URL (str): the url of the image
+            width (int): the width of the image
+            height (int): the height of the image
+            position (list): the position of the image.
+        """
+
+        from ipyleaflet import WidgetControl
+        import ipywidgets as widgets
+
+        widget = widgets.HTML(value = f'<img src="{url}" width = "{width}" height = "{height}">')
+        control = WidgetControl(widget = widget, position = position)
+        self.add(control)
 
 
         

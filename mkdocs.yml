@@ -56,6 +56,8 @@ nav:
            - examples/fakemap.ipynb
            - examples/ipyleafletmappingLab7.ipynb
            - examples/FoliumMappingLab7.ipynb
+           - examples/AddingImages.ipynb
+           - examples/raster.ipynb
     - API Reference:
           - fakemap module: fakemap.md
           - foliummap module: foliummap.md
