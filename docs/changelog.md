@@ -1,5 +1,7 @@
 # Changelog
 
+## v0.0.5 - April 27, 2023
+- Added toolbar for basemaps
 ## v0.0.4 - April 21, 2023
 - Added Add image and add raster  
 ## v0.0.3 - April 14, 2023 
