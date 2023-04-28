@@ -58,6 +58,7 @@ nav:
            - examples/FoliumMappingLab7.ipynb
            - examples/AddingImages.ipynb
            - examples/raster.ipynb
+           - examples/Lab9Adddropdown.ipynb
     - API Reference:
           - fakemap module: fakemap.md
           - foliummap module: foliummap.md
