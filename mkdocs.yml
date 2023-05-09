@@ -62,6 +62,8 @@ nav:
            - examples/MapingGeoTIFFS.ipynb
            - examples/MetadataGeoTIFF.ipynb
            - examples/SpectralProfiles.ipynb
+           - examples/ExamplesforRealWorldApplication.ipynb
+           - examples/MoreRealWorldExamples.ipynb
     - API Reference:
           - fakemap module: fakemap.md
           - foliummap module: foliummap.md
