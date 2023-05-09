@@ -402,26 +402,30 @@ def plot_spectral_profile(geotiff_file, x, y):
 
 
 import rasterio
-import numpy as np
+import geopandas as gpd
 import matplotlib.pyplot as plt
 
-def plot_spectral_profile(filepath, x, y):
-    with rasterio.open(filepath) as src:
-        # Extract the pixel values from the GeoTIFF file
-        values = src.read()
-        # Get the metadata of the GeoTIFF file
-        meta = src.meta
-    
-    # Extract the values for the pixel of interest
-    pixel_values = values[:, x, y]
+def plot_pixel_spectral_profile(geotiff_path, pixel_x, pixel_y):
+    # Open the geotiff file in read mode
+    src = rasterio.open(geotiff_path)
+
+    # Read the pixel values and geometry using the pixel's location
+    pixel_values = src.read()[:, pixel_y, pixel_x]
+    pixel_geometry = src.transform * (pixel_x, pixel_y)
 
     # Plot the spectral profile
     fig, ax = plt.subplots()
-    ax.plot(np.arange(1, meta['count'] + 1), pixel_values)
-    ax.set_xlabel('Band')
-    ax.set_ylabel('Pixel Value')
-    ax.set_title(f"Spectral Profile of Pixel ({x}, {y})")
+    ax.plot(src.indexes, pixel_values)
+    ax.set_xlabel('Band Index')
+    ax.set_ylabel('Pixel Reflectance')
+    ax.set_title('Pixel Spectral Profile')
     plt.show()
+
+
+
+
+
+
 
 
 
