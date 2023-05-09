@@ -382,6 +382,13 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 
 def plot_pixel_spectral_profile(geotiff_path, pixel_x, pixel_y):
+    """_summary_
+
+    Args:
+        geotiff_path (str): path to the image
+        pixel_x (int): X location of pixel 
+        pixel_y (int): y location of pixel
+    """
     # Open the geotiff file in read mode
     src = rasterio.open(geotiff_path)
 
