@@ -30,7 +30,7 @@
 - The ability to print the metadata for a GeoTIFF  
 
 ## Examples
--All features include a jupyter notebook that can be opened for a demonstration Click the examples tab to learn more and see the example notebooks.
+- All features include a jupyter notebook that can be opened for a demonstration Click the examples tab to learn more and see the example notebooks.
 
 ## Credits
 
