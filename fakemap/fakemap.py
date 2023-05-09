@@ -2,7 +2,8 @@
 
 import random
 import ipyleaflet
-
+import rasterio
+import matplotlib
 class Map(ipyleaflet.Map):
 
     def __init__(self, center=[20,0], **kwargs) -> None:
@@ -354,10 +355,67 @@ class Map(ipyleaflet.Map):
         toolbar_button.observe(toolbar_click, "value")
         toolbar_ctrl = ipyleaflet.WidgetControl(widget=toolbar, position=position)
 
-        self.add_control(toolbar_ctrl)    
+        self.add_control(toolbar_ctrl)  
+
+import rasterio
+import matplotlib.pyplot as plt
+
+def view_satellite_bands(filename):
+    """Display images of the satellite bands
+
+    Args:
+        filename (str): the path to the image
+    """
+    with rasterio.open(filename) as dataset:
+        # loop through each band and plot separately
+        for i in range(1, dataset.count+1):
+            band = dataset.read(i)
+            plt.imshow(band)
+            plt.title("Band {}".format(i))
+            plt.show()  
+
+import rasterio
+import matplotlib.pyplot as plt
 
 
-        
+
+import matplotlib.pyplot as plt
+import rasterio
+
+def plot_spectral_profiles(file):
+    """Creates a basic spectral profile of the image
+
+    Args:
+        file (str): the path to the image
+    """
+    with rasterio.open(file) as src:
+        for band in range(1, src.count+1):
+            data = src.read(band)
+            plt.plot(data.flatten(), label=f'Band {band}')
+    plt.legend()
+    plt.show()
+
+import rasterio
+
+def print_geotiff_metadata(filename):
+    """Displays available metadata for the image 
+
+    Args:
+        filename (str): path to the image
+    """
+    with rasterio.open(filename) as dataset:
+        print(f"Metadata for GeoTIFF file: {filename}")
+        print(f"Width: {dataset.width}")
+        print(f"Height: {dataset.height}")
+        print(f"Number of bands: {dataset.count}")
+        print(f"Data type: {dataset.dtypes[0]}")
+        print(f"Coordinate reference system: {dataset.crs}")
+        print(f"Transform: \n{dataset.transform}")
+        print(f"Bounds: {dataset.bounds}")
+        print(f"Metadata: {dataset.meta}")
+
+
+    
 
 
 
