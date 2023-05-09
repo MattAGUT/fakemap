@@ -59,6 +59,9 @@ nav:
            - examples/AddingImages.ipynb
            - examples/raster.ipynb
            - examples/Lab9Adddropdown.ipynb
+           - examples/MapingGeoTIFFS.ipynb
+           - examples/MetadataGeoTIFF.ipynb
+           - examples/SpectralProfiles.ipynb
     - API Reference:
           - fakemap module: fakemap.md
           - foliummap module: foliummap.md
