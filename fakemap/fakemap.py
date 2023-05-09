@@ -377,30 +377,6 @@ def view_satellite_bands(filename):
 
 
 
-
-import rasterio as rio
-import geopandas as gpd
-import matplotlib.pyplot as plt
-
-def plot_spectral_profile(geotiff_file, x, y):
-    # Open the GeoTIFF file
-    with rio.open(geotiff_file) as dataset:
-        # Get the metadata
-        metadata = dataset.meta.copy()
-        # Get the pixel size and coordinates from x and y
-        col, row = dataset.index(x, y)
-        # Read the spectral values for the pixel
-        values = dataset.read(window=((row, row+1), (col, col+1)))
-   
-    # Create a line plot of the spectral profile
-    plt.plot(values[0], label='Spectral Profile')
-    plt.xlabel('Band')
-    plt.ylabel('Reflectance')
-    plt.title('Spectral Profile of Pixel ({}, {})'.format(x, y))
-    plt.legend()
-    plt.show()
-
-
 import rasterio
 import geopandas as gpd
 import matplotlib.pyplot as plt
@@ -420,6 +396,8 @@ def plot_pixel_spectral_profile(geotiff_path, pixel_x, pixel_y):
     ax.set_ylabel('Pixel Reflectance')
     ax.set_title('Pixel Spectral Profile')
     plt.show()
+
+
 
 
 
