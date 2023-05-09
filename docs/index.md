@@ -11,7 +11,6 @@
 -   Documentation: <https://MattAGUT.github.io/fakemap>
     
 
-## Features
 
 ## Purpose
 
