@@ -374,26 +374,81 @@ def view_satellite_bands(filename):
             plt.title("Band {}".format(i))
             plt.show()  
 
-import rasterio
+
+
+
+
+import rasterio as rio
+import geopandas as gpd
 import matplotlib.pyplot as plt
 
-
-
-import matplotlib.pyplot as plt
-import rasterio
-
-def plot_spectral_profiles(file):
-    """Creates a basic spectral profile of the image
-
-    Args:
-        file (str): the path to the image
-    """
-    with rasterio.open(file) as src:
-        for band in range(1, src.count+1):
-            data = src.read(band)
-            plt.plot(data.flatten(), label=f'Band {band}')
+def plot_spectral_profile(geotiff_file, x, y):
+    # Open the GeoTIFF file
+    with rio.open(geotiff_file) as dataset:
+        # Get the metadata
+        metadata = dataset.meta.copy()
+        # Get the pixel size and coordinates from x and y
+        col, row = dataset.index(x, y)
+        # Read the spectral values for the pixel
+        values = dataset.read(window=((row, row+1), (col, col+1)))
+   
+    # Create a line plot of the spectral profile
+    plt.plot(values[0], label='Spectral Profile')
+    plt.xlabel('Band')
+    plt.ylabel('Reflectance')
+    plt.title('Spectral Profile of Pixel ({}, {})'.format(x, y))
     plt.legend()
     plt.show()
+
+
+import rasterio
+import numpy as np
+import matplotlib.pyplot as plt
+
+def plot_spectral_profile(filepath, x, y):
+    with rasterio.open(filepath) as src:
+        # Extract the pixel values from the GeoTIFF file
+        values = src.read()
+        # Get the metadata of the GeoTIFF file
+        meta = src.meta
+    
+    # Extract the values for the pixel of interest
+    pixel_values = values[:, x, y]
+
+    # Plot the spectral profile
+    fig, ax = plt.subplots()
+    ax.plot(np.arange(1, meta['count'] + 1), pixel_values)
+    ax.set_xlabel('Band')
+    ax.set_ylabel('Pixel Value')
+    ax.set_title(f"Spectral Profile of Pixel ({x}, {y})")
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+def read_band(src, band):
+    """Reads the data from a band in a rasterio dataset
+
+    Args:
+        src (rasterio DatasetReader): the rasterio dataset
+        band (int): the band number
+
+    Returns:
+        data (numpy array): the data from the selected band
+        band (int): the band number
+    """
+    data = src.read(band)
+    return data, band
+
 
 import rasterio
 
