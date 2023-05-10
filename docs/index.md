@@ -33,6 +33,12 @@
 ## Examples
 - All features include a jupyter notebook that can be opened for a demonstration Click the examples tab to learn more and see the example notebooks.
 
+## Youtube tutorial for the package
+- watch this youtube video for some extra instruction
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=4nCIhS4euFQ
+" target="_blank"><img src="https://i9.ytimg.com/vi_webp/YcfSsJvegmI/mq2.webp?sqp=COzk66IG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEIgZSgaMA8=&rs=AOn4CLBrQbZXxqxDz4QCxHk21pxnexk3sQ" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+
 ## Credits
 
 This package was created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [giswqs/pypackage](https://github.com/giswqs/pypackage) project template.
