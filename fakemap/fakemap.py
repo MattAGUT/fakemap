@@ -522,6 +522,55 @@ def add_marker_cluster(csv_file):
     return m
 
 
+import ipyleaflet
+import pandas as pd
+from ipyleaflet import Marker, MarkerCluster, Map, basemaps, WidgetControl, LayersControl
+
+# function to create a toolbar for creating marker clusters based on an input CSV file
+def createMarkerClusterToolbar(map, csvData):
+  
+  # create a marker cluster group
+  marker_cluster = MarkerCluster()
+
+  # load the CSV data into a Pandas DataFrame
+  df = pd.read_csv(csvData)
+
+  # loop through the DataFrame and add markers to the group
+  for row in df.itertuples():
+    popup_text = row.name
+    marker = Marker(location=(row.lat, row.lng), draggable=False, title=popup_text)
+    marker_cluster.add_layer(marker)
+
+  # add the marker cluster group to the map
+  map.add_layer(marker_cluster)
+
+  # create a toggle control for the marker cluster group
+  marker_cluster_control = WidgetControl(widget=marker_cluster, position="topright", transparent_bg=True)
+
+  # create a toolbar button to toggle the marker cluster group on and off
+  marker_cluster_button = ipyleaflet.Button(description='Toggle Marker Cluster')
+
+  # define an onclick function for the toolbar button
+  def toggleMarkerCluster(button):
+    if marker_cluster.selected is None:
+        marker_cluster.add_layer(marker_cluster)
+    else:
+        marker_cluster.clear_layers()
+
+  marker_cluster_button.on_click(toggleMarkerCluster)
+
+  # add the toolbar button to the map
+  tool_control = WidgetControl(widget=marker_cluster_button, position="topright")
+  map.add_control(tool_control)
+
+  # add the toggle control to the map
+  map.add_control(marker_cluster_control)
+
+  # return the map with the marker cluster group and toolbar added
+  return map
+
+
+
 
 
 
