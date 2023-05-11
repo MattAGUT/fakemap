@@ -462,29 +462,7 @@ def print_geotiff_metadata(filename):
         print(f"Metadata: {dataset.meta}")
 
 
-import pandas as pd
-from ipyleaflet import Map, Marker, MarkerCluster
 
-m = Map(center=(50, 0), zoom=5)
-
-
-def create_marker_cluster(csv_path):
-    # Load CSV data into a pandas DataFrame
-    data = pd.read_csv(csv_path)
-
-    # Create a new marker cluster group
-    markers = MarkerCluster()
-
-    # Create a marker for each row of data and add it to the marker cluster group
-    for i, row in data.iterrows():
-        markers = Marker(location=(row["latitude"], row["longitude"]))
-        m.add_layer(markers)
-
-    # Create a new map and add the marker cluster group to it
-    map_obj = Map(center=(data["latitude"].mean(), data["longitude"].mean()), zoom=10)
-    map_obj.add_layer(markers)
-
-    return map_obj
 
 
 
