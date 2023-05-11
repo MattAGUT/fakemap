@@ -360,22 +360,6 @@ class Map(ipyleaflet.Map):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import rasterio
 import matplotlib.pyplot as plt
 
