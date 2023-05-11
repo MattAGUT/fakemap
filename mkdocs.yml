@@ -64,6 +64,7 @@ nav:
            - examples/SpectralProfiles.ipynb
            - examples/ExamplesforRealWorldApplication.ipynb
            - examples/MoreRealWorldExamples.ipynb
+           - examples/finalexamexamples.ipynb
     - API Reference:
           - fakemap module: fakemap.md
           - foliummap module: foliummap.md
