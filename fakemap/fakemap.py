@@ -355,7 +355,26 @@ class Map(ipyleaflet.Map):
         toolbar_button.observe(toolbar_click, "value")
         toolbar_ctrl = ipyleaflet.WidgetControl(widget=toolbar, position=position)
 
-        self.add_control(toolbar_ctrl)  
+        self.add_control(toolbar_ctrl) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import rasterio
 import matplotlib.pyplot as plt
@@ -457,6 +476,104 @@ def print_geotiff_metadata(filename):
         print(f"Transform: \n{dataset.transform}")
         print(f"Bounds: {dataset.bounds}")
         print(f"Metadata: {dataset.meta}")
+
+
+import pandas as pd
+from ipyleaflet import Map, Marker, MarkerCluster
+
+m = Map(center=(50, 0), zoom=5)
+
+
+def create_marker_cluster(csv_path):
+    # Load CSV data into a pandas DataFrame
+    data = pd.read_csv(csv_path)
+
+    # Create a new marker cluster group
+    markers = MarkerCluster()
+
+    # Create a marker for each row of data and add it to the marker cluster group
+    for i, row in data.iterrows():
+        markers = Marker(location=(row["latitude"], row["longitude"]))
+        m.add_layer(markers)
+
+    # Create a new map and add the marker cluster group to it
+    map_obj = Map(center=(data["latitude"].mean(), data["longitude"].mean()), zoom=10)
+    map_obj.add_layer(markers)
+
+    return map_obj
+
+
+
+
+import geopandas as gpd
+
+def csv_to_shapefile(csv_file_path, output_folder_path):
+    """Convert a csv to a shapefile or geojson
+
+    Args:
+        csv_file_path (str): the path to the csv
+        output_folder_path (str): the path to the geojson
+    """
+    # Load CSV to geopandas DataFrame
+    df = gpd.read_file(csv_file_path)
+
+    # Convert latitude and longitude to geometry points
+    geometry = gpd.points_from_xy(df.longitude, df.latitude)
+
+    # Create new DataFrame with geometry points
+    gdf = gpd.GeoDataFrame(df, geometry=geometry)
+
+    # Output shapefile to file path
+    shapefile_path = output_folder_path + "/output_shapefile.shp"
+    gdf.to_file(shapefile_path, driver='ESRI Shapefile')
+
+    # Output GeoJSON to file path
+    geojson_path = output_folder_path + "/output_geojson.geojson"
+    gdf.to_file(geojson_path, driver='GeoJSON')
+
+
+import pandas as pd
+from ipyleaflet import Map, Marker, MarkerCluster
+
+def add_marker_cluster(csv_file):
+    """create a cluster from a csu
+
+    Args:
+        csv_file (str): the path to the csv
+
+    Returns:
+        Map: Returns a map with the clusters
+    """
+    # read in CSV file
+    df = pd.read_csv(csv_file)
+
+    # create map
+    m = Map(center=(df['latitude'].mean(), df['longitude'].mean()), zoom=10)
+
+    # create marker cluster
+    marker_cluster = MarkerCluster(markers=[Marker(location=(row['latitude'], row['longitude'])) for index, row in df.iterrows()])
+
+    # add marker cluster to map
+    m.add_layer(marker_cluster)
+
+    # display map
+    return m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     
